@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.jsdelivr.net/npm/axios@1.1.2/dist/axios.min.js"></script>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <link rel="stylesheet" href="style.css">
+    <title>Document</title>
+</head>
+<body>
+    <div id="app" class="container">
+        <h1>NASA Pictures</h1>
+
+        <nav>
+            <div class="searchByDay">
+                <input @change="getPicture()" type="date" name="date" id="date" v-model="dayFilter">
+            </div>
+
+            <button @click="getNewPictures()" id="randomPictures">Random Pictures</button>
+        </nav>
+
+        <div id="pictures" class="pictures">
+            <div @click="pictureDetail = {title: picture.title, url: picture.url, date: picture.date, explanation: picture.explanation, copyright: picture.copyright}" class="picture" v-for="picture in pictures" :key="picture.title">
+                <div class="picture__img__container">
+                    <img class="picture__img" :src="picture.url" :alt="picture.title">
+                </div>
+                <h3 class="picture__title">{{ picture.title }}</h3>
+                <p class="picture__date">{{ picture.date }}</p>
+            </div>
+        </div>
+
+        <template v-if="pictureDetail">
+            <div id="picture_detail" class="picture_detail">
+                <div @click="cerrarMenu()" id="menu__hamburguesa">
+                    <div class="line"></div>
+                    <div class="line"></div>
+                </div>
+                <img class="picture_detail__img" :src="pictureDetail.url" alt="">
+                <div class="picture_detail__info">
+                    <h2 class="picture_detail__title">{{ pictureDetail.title }}</h2>
+                    <p class="picture_detail__explanation">{{ pictureDetail.explanation }}</p>
+                    <p class="picture_detail__date">{{ pictureDetail.date }}</p>
+                    <p class="picture_detail__copyright">{{ pictureDetail.copyright }}</p>
+                </div>
+            </div>
+        </template>
+    </div>
+    
+    <script src="index.js"></script>
+</body>
+</html>
